@@ -31,33 +31,28 @@
       />
       {{ pagesize }}
     </p>
-    <button @click="pagePrecedente()" :disabled="page == 0">
-      Précédent
-    </button>
+    <button @click="pagePrecedente()" :disabled="page == 0">Précédent</button>
     <button @click="pageSuivante()">Suivant</button>
 
     <template>
-    <v-simple-table dense>
-      <template v-slot:default>
-        <thead>
-      <tr>
-        <th>Nom</th>
-        <th>Cuisine</th>
-        <th>Quartier</th>
-      </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="(r, index) in restaurants"
-          :key="index"
-        >
-          <td>{{ r.name }}</td>
-          <td>{{ r.cuisine }}</td>
-          <td>{{ r.borough}}</td>
-        </tr>
-      </tbody>
-      </template>
-    </v-simple-table>
+      <v-simple-table dark>
+        <template v-slot:default>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Cuisine</th>
+              <th>Quartier</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(r, index) in restaurants" :key="index">
+              <td>{{ r.name }}</td>
+              <td>{{ r.cuisine }}</td>
+              <td>{{ r.borough }}</td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
     </template>
   </div>
 </template>
@@ -70,7 +65,7 @@ export default {
   props: {
     msg: String,
   },
-  data: function() {
+  data: function () {
     return {
       restaurants: [],
       nbRestaurants: 0,
