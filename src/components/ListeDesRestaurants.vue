@@ -45,7 +45,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(r, index) in restaurants" :key="index">
+            <tr v-for="(r, index) in restaurants" :key="index"
+                @click="supprimerRestaurant( item )">
               <td>{{ r.name }}</td>
               <td>{{ r.cuisine }}</td>
               <td>{{ r.borough }}</td>
@@ -77,10 +78,12 @@ export default {
       nomRecherche: "",
     };
   },
+
   mounted() {
     console.log("AVANT AFFICHAGE");
     this.getDataFromServer();
   },
+
   methods: {
     // async obligatoire si utilisation de await, pas la peine sinon
     async getDataFromServer() {
