@@ -31,8 +31,8 @@
       />
       {{ pagesize }}
     </p>
-    <button @click="pagePrecedente()" :disabled="page == 0">Précédent</button>
-    <button @click="pageSuivante()">Suivant</button>
+    <v-btn @click="pagePrecedente()" :disabled="page == 0">Précédent</v-btn>
+    <v-btn @click="pageSuivante()">Suivant</v-btn>
 
     <template>
       <v-simple-table dark>
@@ -42,14 +42,22 @@
               <th>Nom</th>
               <th>Cuisine</th>
               <th>Quartier</th>
+              <th>Détail</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(r, index) in restaurants" :key="index"
-                @click="supprimerRestaurant( item )">
-              <td>{{ r.name }}</td>
-              <td>{{ r.cuisine }}</td>
-              <td>{{ r.borough }}</td>
+            <tr v-for="(r, index) in restaurants" :key="index">
+              <td class="nom">{{ r.name }}</td>
+              <td class="cuisine">{{ r.cuisine }}</td>
+              <td class="quartier">{{ r.borough }}</td>
+              <td>
+                <v-btn
+                  elevation="2"
+                  x-large
+                  class="detail"
+                  href="" >Détail</v-btn
+                >
+              </td>
             </tr>
           </tbody>
         </template>
@@ -122,8 +130,12 @@ export default {
         console.log("Erreur dans les fetchs GET " + err.msg);
       }
     },
+
+    async detailRestaurant() {},
+
     async supprimerRestaurant(id) {
       try {
+        console.log(id);
         let reponseJSON = await fetch(this.apiBaseURL + "/" + id, {
           method: "DELETE",
         });
@@ -134,6 +146,7 @@ export default {
         console.log("Erreur dans le fetchs DELETE " + err.msg);
       }
     },
+
     async ajouterRestaurant(event) {
       // eviter le comportement par defaut
       event.preventDefault();
@@ -176,4 +189,20 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.detail {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.nom {
+  text-align: center;
+}
+
+.cuisine {
+  text-align: center;
+}
+
+.quartier {
+  text-align: center;
+}
 </style>
