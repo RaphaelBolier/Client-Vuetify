@@ -1,15 +1,31 @@
 <template>
   <div>
-    <h1>iRestaurant</h1>
+    <v-app-bar dense src="../assets/1.jpg" dark>
+      <v-img
+        src="../assets/logo.png"
+        contain
+        max-height="40"
+        max-width="40"
+      ></v-img>
+      iRestaurant
+    </v-app-bar>
 
-    <form v-on:submit="ajouterRestaurant">
-      <label> Nom : <input type="text" required v-model="nom" /> </label>
-      <label>
-        Cuisine : <input type="text" required v-model="cuisine" />
-      </label>
-      <button>Ajouter</button>
-    </form>
-    .
+    <v-form ref="form" v-model="valid" lazy-validation>
+      <v-text-field
+        v-model="nom"
+        :rules="nameRules"
+        label="Nom"
+        required
+      ></v-text-field>
+
+      <v-text-field
+        v-model="cuisine"
+        :rules="cuisineRules"
+        label="Cuisine"
+        required
+      ></v-text-field>
+      <v-btn @click="ajouterRestaurant">Ajouter</v-btn>
+    </v-form>
 
     <h2>
       <label
@@ -55,15 +71,9 @@
               <td class="cuisine">{{ r.cuisine }}</td>
               <td class="quartier">{{ r.borough }}</td>
               <td class="detail">
-
-
-
                 <v-flex>
                   <Popup />
                 </v-flex>
-
-
-
               </td>
             </tr>
           </tbody>
@@ -76,7 +86,6 @@
 
 
 <script>
-
 import Popup from "./Popup";
 
 export default {
@@ -91,10 +100,11 @@ export default {
   },
 
   data: function () {
-    
     return {
       restaurants: [],
       nbRestaurants: 0,
+      nameRules: [(v) => !!v || "Name is required"],
+      cuisineRules: [(v) => !!v || "Cuisine is required"],
       nom: "",
       cuisine: "",
       apiBaseURL: "http://localhost:8080/api/restaurants",
@@ -167,6 +177,7 @@ export default {
     async ajouterRestaurant(event) {
       // eviter le comportement par defaut
       event.preventDefault();
+      this.$refs.form.validate();
 
       let donneesFormulaire = new FormData();
       donneesFormulaire.append("nom", this.nom);
@@ -207,6 +218,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1 {
+  color: white;
   text-align: center;
   background-image: url(../assets/1.jpg);
 }
