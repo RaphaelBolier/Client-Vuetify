@@ -1,16 +1,14 @@
 <template>
-    <ListeDesRestaurants />
+  <v-app>
+    <router-view></router-view>
+  </v-app>
 </template>
 
 <script>
-import ListeDesRestaurants from './components/ListeDesRestaurants';
-
 export default {
-  name: 'App',
+  name: "App",
 
-  components: {
-    ListeDesRestaurants,
-  },
+  components: {},
 
   data: () => ({
     //

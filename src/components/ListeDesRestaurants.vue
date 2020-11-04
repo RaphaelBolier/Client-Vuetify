@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h1>iRestaurant</h1>
+
     <form v-on:submit="ajouterRestaurant">
       <label> Nom : <input type="text" required v-model="nom" /> </label>
       <label>
@@ -7,6 +9,8 @@
       </label>
       <button>Ajouter</button>
     </form>
+    .
+
     <h2>
       <label
         >Recherche par nom:
@@ -50,13 +54,16 @@
               <td class="nom">{{ r.name }}</td>
               <td class="cuisine">{{ r.cuisine }}</td>
               <td class="quartier">{{ r.borough }}</td>
-              <td>
-                <v-btn
-                  elevation="2"
-                  x-large
-                  class="detail"
-                  href="" >Détail</v-btn
-                >
+              <td class="detail">
+
+
+
+                <v-flex>
+                  <Popup />
+                </v-flex>
+
+
+
               </td>
             </tr>
           </tbody>
@@ -69,12 +76,22 @@
 
 
 <script>
+
+import Popup from "./Popup";
+
 export default {
+  components: {
+    Popup,
+  },
+
   name: "Listedesrestaurants",
+
   props: {
     msg: String,
   },
+
   data: function () {
+    
     return {
       restaurants: [],
       nbRestaurants: 0,
@@ -189,6 +206,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+h1 {
+  text-align: center;
+  background-image: url(../assets/1.jpg);
+}
+
 .detail {
   margin-left: auto;
   margin-right: auto;
