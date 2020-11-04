@@ -5,7 +5,7 @@ import vuetify from './plugins/vuetify';
 import Vuetify from 'vuetify/lib';
 
 import ListeDesRestaurants from './components/ListeDesRestaurants';
-import Detail from './components/Detail';
+import MapRestaurant from './components/MapRestaurant';
 
 Vue.config.productionTip = false
 Vue.use(Vuetify)
@@ -18,8 +18,8 @@ const router = new VueRouter({
       component: ListeDesRestaurants
     },
     {
-      path: '/Detail/:id',
-      component: Detail
+      path: '/Map/:id',
+      component: MapRestaurant
     },
 
   ]

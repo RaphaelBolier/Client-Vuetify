@@ -9,76 +9,96 @@
       ></v-img>
       iRestaurant
     </v-app-bar>
+    <div class="maybe">
+      <h2>Ajouter un restaurant :</h2>
 
-    <v-form ref="form" v-model="valid" lazy-validation>
+      <v-form ref="form" v-model="valid" lazy-validation>
+        <v-text-field
+          v-model="nom"
+          :rules="nameRules"
+          label="Nom"
+          placeholder="Nom du restaurant"
+          required
+          color="indigo"
+        ></v-text-field>
+
+        <v-text-field
+          v-model="cuisine"
+          :rules="cuisineRules"
+          label="Cuisine"
+          placeholder="Cuisine du restaurant"
+          required
+          color="indigo"
+        ></v-text-field>
+        <v-btn @click="ajouterRestaurant" dark>Ajouter</v-btn>
+      </v-form>
+
       <v-text-field
-        v-model="nom"
-        :rules="nameRules"
-        label="Nom"
-        required
-      ></v-text-field>
-
-      <v-text-field
-        v-model="cuisine"
-        :rules="cuisineRules"
-        label="Cuisine"
-        required
-      ></v-text-field>
-      <v-btn @click="ajouterRestaurant">Ajouter</v-btn>
-    </v-form>
-
-    <h2>
-      <label
-        >Recherche par nom:
-        <input
-          type="text"
-          v-model="nomRecherche"
-          @input="getDataFromServer()"
-        />
-      </label>
-    </h2>
-    <h1>Nombre de restaurants : {{ nbRestaurants }}</h1>
-    <p>Page courante : {{ page }}</p>
-    <p>
-      Nb de restaurants par page :
-      <input
-        type="range"
-        min="5"
-        max="100"
-        step="1"
-        v-model="pagesize"
-        v-on:input="getDataFromServer()"
+        label="Rechercher un restaurant"
+        type="text"
+        placeholder="Nom du restaurant"
+        v-model="nomRecherche"
       />
-      {{ pagesize }}
-    </p>
-    <v-btn @click="pagePrecedente()" :disabled="page == 0">Précédent</v-btn>
-    <v-btn @click="pageSuivante()">Suivant</v-btn>
+      <h1>Nombre de restaurants : {{ nbRestaurants }}</h1>
+      <p>
+        <v-slider
+          label="Nb de restaurants par page :"
+          thumb-label="use"
+          min="5"
+          max="100"
+          step="1"
+          v-model="pagesize"
+          v-on:input="getDataFromServer()"
+        />
+      </p>
+    </div>
 
     <template>
       <v-simple-table dark>
         <template v-slot:default>
           <thead>
             <tr>
-              <th>Nom</th>
-              <th>Cuisine</th>
-              <th>Quartier</th>
-              <th>Détail</th>
+              <th class="header">Nom</th>
+              <th class="header">Cuisine</th>
+              <th class="header">Quartier</th>
+              <th class="header">Détail</th>
+              <th>Map</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(r, index) in restaurants" :key="index">
-              <td class="nom">{{ r.name }}</td>
-              <td class="cuisine">{{ r.cuisine }}</td>
-              <td class="quartier">{{ r.borough }}</td>
-              <td class="detail">
+              <td>{{ r.name }}</td>
+              <td>{{ r.cuisine }}</td>
+              <td>{{ r.borough }}</td>
+              <td>
                 <v-flex>
-                  <Popup />
+                  <Popup :restaurant="r" />
                 </v-flex>
+              </td>
+              <td>
+                <v-btn color="green">
+                  <v-img
+                    src="../assets/icon_map.png"
+                    max-height="40"
+                    max-width="40"
+                  ></v-img
+                ></v-btn>
               </td>
             </tr>
           </tbody>
         </template>
       </v-simple-table>
+      <v-footer dark>
+        <v-card light
+          ><v-btn @click="pagePrecedente()" :disabled="page == 0"
+            >Précédent</v-btn
+          ></v-card
+        >
+        <v-card light><v-btn @click="pageSuivante()">Suivant</v-btn></v-card>
+        Page courante : {{ page }}
+        <v-spacer></v-spacer>
+        Raphaël Bolier - Corentin Garnier
+      </v-footer>
     </template>
   </div>
 </template>
@@ -109,7 +129,7 @@ export default {
       cuisine: "",
       apiBaseURL: "http://localhost:8080/api/restaurants",
       page: 0,
-      pagesize: 100,
+      pagesize: 10,
       nomRecherche: "",
     };
   },
@@ -217,26 +237,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1 {
-  color: white;
-  text-align: center;
-  background-image: url(../assets/1.jpg);
-}
-
-.detail {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.nom {
-  text-align: center;
-}
-
-.cuisine {
-  text-align: center;
-}
-
-.quartier {
-  text-align: center;
-}
 </style>
