@@ -1,17 +1,43 @@
 <template>
-<div class="image"> <h1> Voici la carte centrée sur le restaurant : {{ restaurant.name }} </h1> </div>
+  <div class="image">
+    <h1>Voici l'emplacement de votre restaurant : {{ restaurant.name }}</h1>
+    <div class="map">
+      <l-map
+        style="height: 500px; width: 500px"
+        :zoom="zoom"
+        :center="center"
+        @update:zoom="zoomUpdated"
+        @update:center="centerUpdated"
+        @update:bounds="boundsUpdated"
+      >
+        <l-tile-layer :url="url"></l-tile-layer>
+        <l-marker :lat-lng="LMarker"></l-marker>
+      </l-map>
+    </div>
+  </div>
 </template>
 
 <script>
+import { latLng } from "leaflet";
+import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
+
 export default {
-
-  
   name: "Detail",
-
+  components: {
+    LMap,
+    LTileLayer,
+    LMarker,
+  },
   props: {},
   data: function () {
     return {
       restaurant: null,
+      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+
+      center: latLng(65.41322, -1.219482),
+      bounds: null,
+      zoom: 14,
+      LMarker: latLng(65.41322, -1.219482),
     };
   },
 
@@ -29,14 +55,30 @@ export default {
       .then((data) => {
         console.log(data.restaurant.name);
         this.restaurant = data.restaurant;
+        this.center = latLng(
+          this.restaurant.address.coord[1],
+          this.restaurant.address.coord[0]
+        );
+        this.LMarker = this.center;
       });
+  },
+  methods: {
+    zoomUpdated(zoom) {
+      this.zoom = zoom;
+    },
+    centerUpdated(center) {
+      this.center = center;
+    },
+    boundsUpdated(bounds) {
+      this.bounds = bounds;
+    },
   },
 };
 </script>
 
 <style scoped>
-.image{
-  background-image: url('../assets/1.jpg');
+.image {
+  background-image: url("../assets/1.jpg");
   height: 100%;
   width: 100%;
   color: aliceblue;

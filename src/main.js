@@ -3,7 +3,14 @@ import VueRouter from 'vue-router';
 import App from './App.vue'
 import vuetify from './plugins/vuetify';
 import Vuetify from 'vuetify/lib';
+import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
 import 'leaflet/dist/leaflet.css';
+import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css';
+import 'leaflet-defaulticon-compatibility';
+
+Vue.component('l-map', LMap);
+Vue.component('l-tile-layer', LTileLayer);
+Vue.component('l-marker', LMarker);
 
 import ListeDesRestaurants from './components/ListeDesRestaurants';
 import MapRestaurant from './components/MapRestaurant';
