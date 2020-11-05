@@ -43,7 +43,6 @@
       <p>
         <v-slider
           label="Nb de restaurants par page :"
-          thumb-label="use"
           min="5"
           max="100"
           step="1"
@@ -76,13 +75,7 @@
                 </v-flex>
               </td>
               <td>
-                <v-btn color="green">
-                  <v-img
-                    src="../assets/icon_map.png"
-                    max-height="40"
-                    max-width="40"
-                  ></v-img
-                ></v-btn>
+                <router-link :to="{name: 'Map', params: { id: r._id , name: r.name, coords: r.coord}}" tag="button"> Map </router-link>
               </td>
             </tr>
           </tbody>

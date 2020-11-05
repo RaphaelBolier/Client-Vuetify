@@ -1,10 +1,11 @@
 <template>
-<div> OUI </div>
+<div class="image"> <h1> Voici la carte centrée sur le restaurant : {{ restaurant.name }} </h1> </div>
 </template>
 
 <script>
 export default {
 
+  
   name: "Detail",
 
   props: {},
@@ -32,3 +33,13 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.image{
+  background-image: url('../assets/1.jpg');
+  height: 100%;
+  width: 100%;
+  color: aliceblue;
+  text-align: center;
+}
+</style>
