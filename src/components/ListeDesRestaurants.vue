@@ -61,7 +61,7 @@
               <th class="header">Cuisine</th>
               <th class="header">Quartier</th>
               <th class="header">Détail</th>
-              <th>Map</th>
+              <th class="header">Map</th>
             </tr>
           </thead>
           <tbody>

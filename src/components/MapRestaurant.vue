@@ -2,18 +2,32 @@
   <div class="image">
     <h1>Voici l'emplacement de votre restaurant : {{ restaurant.name }}</h1>
     <div class="map">
-      <l-map
-        style="height: 500px; width: 500px"
-        :zoom="zoom"
-        :center="center"
-        @update:zoom="zoomUpdated"
-        @update:center="centerUpdated"
-        @update:bounds="boundsUpdated"
-      >
-        <l-tile-layer :url="url"></l-tile-layer>
-        <l-marker :lat-lng="LMarker"></l-marker>
-      </l-map>
+      <v-container>
+        <v-row>
+          <v-col>
+            <l-map
+              style="height: 500px; width: 500px"
+              :zoom="zoom"
+              :center="center"
+              @update:zoom="zoomUpdated"
+              @update:center="centerUpdated"
+              @update:bounds="boundsUpdated"
+            >
+              <l-tile-layer :url="url"></l-tile-layer>
+              <l-marker :lat-lng="LMarker"></l-marker>
+            </l-map>
+          </v-col>
+          <v-col>
+            <br><br>
+            Voici les notes attribuées a ce restaurant : <br />
+            <ul v-for="grade in restaurant.grades" :key="grade">
+              <li>{{ grade.score }}, {{ grade.grade }}</li>
+            </ul></v-col
+          >
+        </v-row>
+      </v-container>
     </div>
+    <router-link :to="{ name: 'Acceuil' }" tag="button"> Retour </router-link>
   </div>
 </template>
 
