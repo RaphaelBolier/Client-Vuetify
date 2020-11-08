@@ -1,6 +1,6 @@
 # tp3
 
-### Point notables de notre projet :
+### Points notables de notre projet :
 - Details affichés en Popup
 - Nouvelle page ou il est possible de voir la carte centrée sur l'emplacement de notre restaurant
 
